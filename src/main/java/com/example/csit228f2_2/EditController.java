@@ -33,6 +33,7 @@ public class EditController {
     @FXML
     private Label messageLabel;
 
+    @FXML
     private void handleUpdate() {
         String prevUsername = tfPrevUsername.getText();
         String prevPassword = pfPrevPassword.getText();
@@ -55,14 +56,14 @@ public class EditController {
 
                 int rowsUpdated = statement.executeUpdate();
                 if (rowsUpdated > 0) {
-                    System.out.println("User information updated successfully!");
+                    messageLabel.setText("User information updated successfully!.");
                     // Clear the text fields after successful update
                     tfPrevUsername.clear();
                     pfPrevPassword.clear();
                     tfNewUsername.clear();
                     pfNewPassword.clear();
                 } else {
-                    System.out.println("Failed to update user information. Please check previous username and password.");
+                    messageLabel.setText("Failed to update user information. Please check previous username and password.");
                 }
             }
         } catch (SQLException e) {

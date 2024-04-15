@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -20,13 +21,15 @@ public class DeleteController {
     @FXML
     private TextField tfUsername;
 
-
+    @FXML
+    private Label messageLabel;
+    @FXML
     private void handleDelete() {
         String usernameToDelete = tfUsername.getText();
 
         // Check if username is empty
         if (usernameToDelete.isEmpty()) {
-            System.out.println("Please enter a username.");
+            messageLabel.setText("Please enter username.");
             return;
         }
 
@@ -47,15 +50,15 @@ public class DeleteController {
                         // Execute the delete query
                         int rowsDeleted = deleteStatement.executeUpdate();
                         if (rowsDeleted > 0) {
-                            System.out.println("User with username '" + usernameToDelete + "' deleted successfully.");
+                            messageLabel.setText("User with username " + usernameToDelete + " deleted successfully!");
                             // Clear the username text field after successful deletion
                             tfUsername.clear();
                         } else {
-                            System.out.println("Failed to delete user with username '" + usernameToDelete + "'.");
+                            messageLabel.setText("Failed to delete username");
                         }
                     }
                 } else {
-                    System.out.println("No user found with username '" + usernameToDelete + "'.");
+                    messageLabel.setText("No username found.");
                 }
             }
         } catch (SQLException e) {
