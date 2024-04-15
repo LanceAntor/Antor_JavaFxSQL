@@ -40,7 +40,7 @@ public class EditController {
         String newUsername = tfNewUsername.getText();
         String newPassword = pfNewPassword.getText();
 
-        // Check if any field is empty
+
         if (prevUsername.isEmpty() || prevPassword.isEmpty() || newUsername.isEmpty() || newPassword.isEmpty()) {
             messageLabel.setText("Please Enter Username & Password.");
             return;
@@ -57,7 +57,7 @@ public class EditController {
                 int rowsUpdated = statement.executeUpdate();
                 if (rowsUpdated > 0) {
                     messageLabel.setText("User information updated successfully!.");
-                    // Clear the text fields after successful update
+
                     tfPrevUsername.clear();
                     pfPrevPassword.clear();
                     tfNewUsername.clear();

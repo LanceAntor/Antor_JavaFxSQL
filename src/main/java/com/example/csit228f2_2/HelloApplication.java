@@ -45,18 +45,16 @@ public class HelloApplication extends Application {
         hbSignIn.setAlignment(Pos.CENTER);
         grid.add(hbSignIn, 0, 1);
 
-        // Existing code
         Text dontHaveAccountText = new Text("Don't have an account?");
         dontHaveAccountText.setFill(Paint.valueOf("#325622"));
         dontHaveAccountText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
         grid.add(dontHaveAccountText, 0, 2);
 
-        // Corrected code: Set the alignment of the HBox containing the Register button
         Button btnRegister = new Button("Register");
         btnRegister.setFont(Font.font(45));
         HBox hbRegister = new HBox();
         hbRegister.getChildren().add(btnRegister);
-        hbRegister.setAlignment(Pos.CENTER); // Center the HBox
+        hbRegister.setAlignment(Pos.CENTER);
         grid.add(hbRegister, 0, 3);
 
 

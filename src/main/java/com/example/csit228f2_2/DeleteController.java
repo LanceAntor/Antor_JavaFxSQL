@@ -27,31 +27,26 @@ public class DeleteController {
     private void handleDelete() {
         String usernameToDelete = tfUsername.getText();
 
-        // Check if username is empty
         if (usernameToDelete.isEmpty()) {
             messageLabel.setText("Please enter username.");
             return;
         }
 
         try (Connection connection = MySQLConnection.getConnection()) {
-            // Prepare the select query to check if the username exists
             String selectQuery = "SELECT * FROM users WHERE username = ?";
             try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
                 selectStatement.setString(1, usernameToDelete);
                 ResultSet resultSet = selectStatement.executeQuery();
 
-                // If username exists, proceed with deletion
                 if (resultSet.next()) {
-                    // Prepare the delete query
                     String deleteQuery = "DELETE FROM users WHERE username = ?";
                     try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
                         deleteStatement.setString(1, usernameToDelete);
 
-                        // Execute the delete query
                         int rowsDeleted = deleteStatement.executeUpdate();
                         if (rowsDeleted > 0) {
                             messageLabel.setText("User with username " + usernameToDelete + " deleted successfully!");
-                            // Clear the username text field after successful deletion
+
                             tfUsername.clear();
                         } else {
                             messageLabel.setText("Failed to delete username");
