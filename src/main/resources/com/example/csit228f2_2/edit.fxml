@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csit228f2_2.EditController">
+
+    <Label layoutX="70.0" layoutY="49.0" text="Previous Username:">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+    <TextField fx:id="tfPrevUsername" layoutX="250.0" layoutY="45.0" />
+
+    <Label layoutX="70.0" layoutY="98.0" text="Previous Password:">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+    <PasswordField fx:id="pfPrevPassword" layoutX="250.0" layoutY="94.0" />
+
+
+    <Label layoutX="70.0" layoutY="147.0" text="New Username:">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+    <TextField fx:id="tfNewUsername" layoutX="250.0" layoutY="143.0" />
+
+    <Label layoutX="70.0" layoutY="196.0" text="New Password:">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+    <PasswordField fx:id="pfNewPassword" layoutX="250.0" layoutY="192.0" />
+
+    <Button fx:id="btnUpdate" layoutX="279.0" layoutY="238.0" onAction="#handleUpdate" text="Update">
+      <font>
+         <Font size="20.0" />
+      </font></Button>
+   <Button fx:id="goBack" layoutX="511.0" layoutY="14.0" mnemonicParsing="false" onAction="#onClickGoBack" text="GoBack" />
+    <Label fx:id="messageLabel" />
+
+</AnchorPane>

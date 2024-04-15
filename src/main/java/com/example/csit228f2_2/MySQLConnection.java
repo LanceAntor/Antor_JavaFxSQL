@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class MySQLConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/antordb";
-    private static final String USERNAME = "hello";
-    private static final String PASSWORD = "hello123";
+    private static final String USERNAME = "lance";
+    private static final String PASSWORD = "lance123";
     public static Connection getConnection(){
         Connection c = null;
         try {
@@ -24,7 +24,6 @@ public class MySQLConnection {
 
     public static void main(String[] args) {
         getConnection();
-
     }
 }
 
