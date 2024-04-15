@@ -24,6 +24,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,6 +112,15 @@ public class HelloApplication extends Application {
         actionTarget.setFont(Font.font(30));
         grid.add(actionTarget, 1, 6);
 
+        Button btnRegister = new Button("Register");
+        btnRegister.setFont(Font.font(45));
+        HBox hbRegister = new HBox();
+        hbRegister.getChildren().add(btnRegister);
+        hbRegister.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(hbRegister, 0, 3, 2, 1);
+
+
+
         btnSignIn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -130,6 +142,32 @@ public class HelloApplication extends Application {
                 actionTarget.setOpacity(1);
             }
         });
+
+        btnRegister.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try(Connection c = MySQLConnection.getConnection();
+                    PreparedStatement statement = c.prepareStatement(
+                            "INSERT INTO users(username, password) VALUES(?, ?)"
+                    )){
+
+                    String username = tfUsername.getText();
+                    String password = pfPassword.getText();
+                    statement.setString(1,username);
+                    statement.setString(2,password);
+
+                    int rowsInserted = statement.executeUpdate();
+                    if(rowsInserted > 0){
+                        System.out.println("Data Inserted Successfully!");
+                    }
+                    System.out.println("Table Created Successfuly");
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
 
         EventHandler<KeyEvent> fieldChange = new EventHandler<KeyEvent>() {
             @Override
