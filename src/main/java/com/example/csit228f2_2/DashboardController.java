@@ -172,37 +172,47 @@ public class DashboardController {
         clearPromptMessages(updatedLabel, deleteLabel, failedDeleteLabel, failedUpdateLabel, userSelectedLabel);
         Admin selectedUser = userTableView.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
-            try (Connection connection = MySQLConnection.getConnection()) {
-                connection.setAutoCommit(false);
-                String deleteProfileQuery = "DELETE FROM userprofile WHERE user_id = ?";
-                try (PreparedStatement profileStatement = connection.prepareStatement(deleteProfileQuery)) {
-                    profileStatement.setInt(1, selectedUser.getId());
-                    int profileRowsDeleted = profileStatement.executeUpdate();
-                    String deleteUserQuery = "DELETE FROM users WHERE username = ?";
-                    try (PreparedStatement userStatement = connection.prepareStatement(deleteUserQuery)) {
-                        userStatement.setString(1, selectedUser.getUsername());
-                        int userRowsDeleted = userStatement.executeUpdate();
-                        if (profileRowsDeleted > 0 && userRowsDeleted > 0) {
-                            connection.commit();
-                            deleteLabel.setOpacity(1);
-                            deleteLabel.setVisible(true);
-                            userTableView.getItems().remove(selectedUser);
-                        } else {
-                            connection.rollback();
-                            failedDeleteLabel.setOpacity(1);
-                            failedDeleteLabel.setVisible(true);
+            Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationDialog.setTitle("Confirm Deletion");
+            confirmationDialog.setHeaderText("Are you sure you want to delete this user?");
+            confirmationDialog.setContentText("This action cannot be undone.");
+
+            confirmationDialog.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    try (Connection connection = MySQLConnection.getConnection()) {
+                        connection.setAutoCommit(false);
+                        String deleteProfileQuery = "DELETE FROM userprofile WHERE user_id = ?";
+                        try (PreparedStatement profileStatement = connection.prepareStatement(deleteProfileQuery)) {
+                            profileStatement.setInt(1, selectedUser.getId());
+                            int profileRowsDeleted = profileStatement.executeUpdate();
+                            String deleteUserQuery = "DELETE FROM users WHERE username = ?";
+                            try (PreparedStatement userStatement = connection.prepareStatement(deleteUserQuery)) {
+                                userStatement.setString(1, selectedUser.getUsername());
+                                int userRowsDeleted = userStatement.executeUpdate();
+                                if (profileRowsDeleted > 0 && userRowsDeleted > 0) {
+                                    connection.commit();
+                                    deleteLabel.setOpacity(1);
+                                    deleteLabel.setVisible(true);
+                                    userTableView.getItems().remove(selectedUser);
+                                } else {
+                                    connection.rollback();
+                                    failedDeleteLabel.setOpacity(1);
+                                    failedDeleteLabel.setVisible(true);
+                                }
+                            }
                         }
+                    } catch (SQLException e) {
+                        System.err.println("Error deleting user: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 }
-            } catch (SQLException e) {
-                System.err.println("Error deleting user: " + e.getMessage());
-                e.printStackTrace();
-            }
+            });
         } else {
             userSelectedLabel.setOpacity(1);
             userSelectedLabel.setVisible(true);
         }
     }
+
 
     @FXML
     public void handleLogOut(ActionEvent actionEvent) {
