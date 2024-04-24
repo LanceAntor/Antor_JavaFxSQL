@@ -1,51 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="377.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csit228f2_2.RegisterController">
-
-
-    <VBox alignment="CENTER" layoutX="112.0" layoutY="14.0" prefHeight="285.0" prefWidth="344.0" spacing="10">
-
-        <Label style="-fx-font-size: 27pt;" text="REGISTRATION">
-         <font>
-            <Font size="13.0" />
-         </font></Label>
-
-        <HBox alignment="CENTER">
-            <Label text="Username:">
-            <font>
-               <Font size="18.0" />
-            </font></Label>
-            <TextField fx:id="tfUsername" prefHeight="25.0" prefWidth="141.0" />
-        </HBox>
-
-
-        <HBox alignment="CENTER">
-            <Label text="Password:">
-            <font>
-               <Font size="18.0" />
-            </font></Label>
-            <PasswordField fx:id="pfPassword" prefHeight="21.0" prefWidth="142.0" />
-        </HBox>
-
-        <Label fx:id="messageLabel" />
-
-
-        <Button onAction="#handleRegister" text="Register" />
-
-        <HBox alignment="CENTER">
-            <Label text="Already have an account?" />
-        </HBox>
-         <Button onAction="#handleSignIn" text="SignIn">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Button>
-    </VBox>
-
-
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="672.0" prefWidth="401.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csit228f2_2.RegisterController">
+   <children>
+      <ImageView fitHeight="719.0" fitWidth="593.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@java/backgroundPictures/galaxy.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="643.0" prefWidth="370.0">
+         <children>
+            <Label layoutX="87.0" layoutY="53.0" text="Register Account" textFill="#c9c1c1">
+               <font>
+                  <Font name="System Bold Italic" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfFirstname" layoutX="58.0" layoutY="109.0" prefHeight="26.0" prefWidth="254.0" promptText="Firstname" styleClass="textfield" stylesheets="@styles.css" />
+            <TextField fx:id="tfLastname" layoutX="58.0" layoutY="149.0" prefHeight="26.0" prefWidth="254.0" promptText="Lastname" styleClass="textfield" stylesheets="@styles.css" />
+            <TextField fx:id="tfGender" layoutX="58.0" layoutY="192.0" prefHeight="26.0" prefWidth="254.0" promptText="Gender" styleClass="textfield" stylesheets="@styles.css" />
+            <TextField fx:id="tfEmail" layoutX="58.0" layoutY="234.0" prefHeight="26.0" prefWidth="254.0" promptText="Email" styleClass="textfield" stylesheets="@styles.css" />
+            <TextField fx:id="tfUsername" layoutX="58.0" layoutY="278.0" prefHeight="26.0" prefWidth="254.0" promptText="Username" styleClass="textfield" stylesheets="@styles.css" />
+            <Button fx:id="btnRegister" layoutX="58.0" layoutY="405.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="42.0" prefWidth="254.0" styleClass="btn2" stylesheets="@styles.css" text="Register" />
+            <Label layoutX="115.0" layoutY="553.0" text="Sign In Account" textFill="#c9c9c9">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnSignIn" layoutX="58.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleSignIn" prefHeight="30.0" prefWidth="254.0" stylesheets="@styles.css" text="Sign In">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn2" />
+               </styleClass></Button>
+            <PasswordField fx:id="pfPassword" layoutX="58.0" layoutY="322.0" prefHeight="26.0" prefWidth="254.0" promptText="Password" styleClass="textfield" stylesheets="@styles.css" />
+            <Label fx:id="messageLabel" layoutX="138.0" layoutY="365.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="cbBtn" layoutX="58.0" layoutY="368.0" mnemonicParsing="false" onAction="#showPassword" text="Show Password" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </CheckBox>
+            <Label fx:id="emptyLabel" layoutX="101.0" layoutY="459.0" text="Please fill in all fields" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="usernameExists" layoutX="88.0" layoutY="459.0" text="Username already exists" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="emailExists" layoutX="101.0" layoutY="458.0" text="Email already exists" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="successMessage" layoutX="83.0" layoutY="462.0" text="User registered successfully!" textFill="#3bff00" visible="false">
+               <font>
+                  <Font name="Arial Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="failedMessage" layoutX="110.0" layoutY="462.0" text="Failed user registered" textFill="RED" visible="false">
+               <font>
+                  <Font name="Arial Italic" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ShowPassword" layoutX="57.0" layoutY="320.0" onAction="#showPassword" prefHeight="30.0" prefWidth="262.0" promptText="Password" styleClass="textfield" stylesheets="@styles.css" visible="false" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

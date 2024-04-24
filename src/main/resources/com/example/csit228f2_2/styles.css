@@ -1,3 +1,56 @@
 .root {
     -fx-background-color: black;
 }
+
+.btn{
+    -fx-background-color: linear-gradient(to bottom right, #0000A0, #191970);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-font-family: Arial;
+}
+.btn:hover{
+    -fx-background-color: linear-gradient(to bottom right, #0000A0, #191970);
+}
+.textfield {
+    -fx-background-color: transparent;
+    -fx-border-color: #000;
+    -fx-border-width: .8px;
+    -fx-text-fill: #fff;
+    -fx-prompt-text-fill: #fff;
+}
+
+.textfield:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: #fff;
+    -fx-border-width: .8px;
+}
+
+.textfield:focused .prompt-text {
+    -fx-text-fill: #fff;
+     -fx-border-color: #fff;
+    -fx-border-width: .8px;
+}
+.btn2{
+    -fx-background-color: linear-gradient(to bottom right, #2C3539, #3B2F2F);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-font-family: Arial;
+}
+.btn2:hover{
+    -fx-background-color: linear-gradient(to bottom right, #2C3539, #3B2F2F);
+}
+.pane{
+    -fx-background-color: linear-gradient(to bottom right, #888B90, #E0E5E5);
+}
+.btn3{
+    -fx-background-color: linear-gradient(to bottom right, #71797E, #2F539B);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-font-family: Arial;
+}
+.btn3:hover{
+    -fx-background-color: linear-gradient(to bottom right, #71797E, #2F539B);
+}

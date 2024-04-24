@@ -4,14 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 
+import javax.swing.text.LabelView;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,17 +26,71 @@ public class SignInController {
     private PasswordField pfPassword;
 
     @FXML
-    private Text actionTarget;
+    private Label messageLabel, emptyMessage;
+
+    @FXML
+    private CheckBox cbBtn;
+
+    @FXML
+    private TextField ShowPassword;
+
+    @FXML
+    protected void initialize() {
+        tfUsername.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                emptyMessage.setVisible(false);
+                messageLabel.setVisible(false);
+            }
+        });
+
+        pfPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                emptyMessage.setVisible(false);
+                messageLabel.setVisible(false);
+            }
+        });
+        tfUsername.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                emptyMessage.setVisible(false);
+                messageLabel.setVisible(false);
+            }
+        });
+
+        pfPassword.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                emptyMessage.setVisible(false);
+                messageLabel.setVisible(false);
+            }
+        });
+    }
 
     @FXML
     protected void handleSignIn(ActionEvent event) {
         String username = tfUsername.getText();
         String password = pfPassword.getText();
-        if (username.isEmpty() || password.isEmpty()) {
-            actionTarget.setText("Username or password cannot be empty");
-            actionTarget.setOpacity(1);
+
+        if (username.equals("admin") && password.equals("123456")) {
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) tfUsername.getScene().getWindow();
+                stage.setTitle("Admin Dashboard");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return;
         }
+
+        if (username.isEmpty() || password.isEmpty()) {
+            emptyMessage.setOpacity(1);
+            emptyMessage.setVisible(true);
+            return;
+        }
+
         try (Connection c = MySQLConnection.getConnection();
              Statement statement = c.createStatement()) {
             String selectQuery = "SELECT * FROM users";
@@ -52,6 +105,7 @@ public class SignInController {
                         Scene scene = new Scene(loader.load());
                         Stage stage = (Stage) tfUsername.getScene().getWindow();
                         stage.setScene(scene);
+                        stage.setTitle("User Area");
                         stage.show();
                         return;
                     } catch (IOException e) {
@@ -59,13 +113,30 @@ public class SignInController {
                     }
                 }
             }
-            actionTarget.setText("Invalid username/password");
-            actionTarget.setOpacity(1);
+            messageLabel.setOpacity(1);
+            messageLabel.setVisible(true);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public void showPassword(){
+        if(cbBtn.isSelected()){
+            ShowPassword.setText(pfPassword.getText());
+            ShowPassword.setVisible(true);
+            pfPassword.setVisible(false);
+        } else {
+            pfPassword.setText(ShowPassword.getText());
+            ShowPassword.setVisible(false);
+            pfPassword.setVisible(true);
+        }
+    }
+
+    @FXML
+    protected void handleTextFieldFocus(ActionEvent event) {
+        emptyMessage.setVisible(false);
+        messageLabel.setVisible(false);
+    }
 
     public void handleRegister(ActionEvent actionEvent) {
         try {
@@ -77,6 +148,7 @@ public class SignInController {
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
             stage.setScene(scene);
+            stage.setTitle("Registration");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
